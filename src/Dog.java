@@ -200,7 +200,15 @@ public class Dog {
         //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
         // 自分の犬番号を受け取る
         int myNum = this.getMyNum();
-        //
+        //  羊の重心座標取得 (gx, gy)
+        double gx = 0, gy = 0;
+         for (int i = 0; i < numSheep; i++) {
+         gx += myLocX + sheepDistance[i] * Math.cos(sheepAngle[i] * Math.PI / 180.);
+         gy += myLocY + sheepDistance[i] * Math.sin(sheepAngle[i] * Math.PI / 180.);
+         }
+         gx /= numSheep;
+         gy /= numSheep;
+         //
         if (step < 50) {
             //最初の50ステップで、左辺（180度方向）に「走る」。
             action = "run:180";
@@ -210,15 +218,15 @@ public class Dog {
             switch (myNum) {
                 case 0:
                     // 犬０は、座標 (50, 600)へ
-                    angle = (Math.atan2(600 - myLocY, 50 - myLocX)) * 180. / Math.PI;
+                    angle = (Math.atan2(gy + 100 - myLocY, 50 - myLocX)) * 180. / Math.PI;
                     break;
                 case 1:
                     // 犬１は、座標 (50, 500)へ
-                    angle = (Math.atan2(500 - myLocY, 50 - myLocX)) * 180. / Math.PI;
+                    angle = (Math.atan2(gy - myLocY, 50 - myLocX)) * 180. / Math.PI;
                     break;
                 case 2:
                     // 犬２は、座標 (50, 400)へ
-                    angle = (Math.atan2(400 - myLocY, 50 - myLocX)) * 180. / Math.PI;
+                    angle = (Math.atan2(gy - 100 - myLocY, 50 - myLocX)) * 180. / Math.PI;
                     break;
                 default:
             }
@@ -228,6 +236,7 @@ public class Dog {
             //　各犬の目標地点に移動する。
             //　ただし、ゆっくりと移動する　move
             //　また、一番近い羊に近づきすぎたら休む　rest
+            //  成功時 367
             action = "rest";
             double angle = 0;
             switch (myNum) {
