@@ -198,8 +198,6 @@ public class Dog {
         // 工夫例 (1)
         //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
         //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-        // 自分の犬番号を受け取る
-        int myNum = this.getMyNum();
         //  羊の重心座標取得 (gx, gy)
         double gx = 0, gy = 0;
          for (int i = 0; i < numSheep; i++) {
@@ -208,29 +206,21 @@ public class Dog {
          }
          gx /= numSheep;
          gy /= numSheep;
-         double dogStart = gy - (550 - gy);
+         double dogStartX = gx - (550 - gx);
+         double dogStartY = gy - (550 - gy);
          //
-        if (step < 50) {
-            //最初の50ステップで、左辺（180度方向）に「走る」。
-            action = "run:180";
-        } else if (step < 100) {
-            //次に、100ステップまでの間に、出発点に移動する。
+        if (step < 30) {
+            //最初の30ステップで、座標 (0, dogStartY)へ
             double angle = 0;
-            switch (myNum) {
-                case 0:
-                    // 犬０は、座標 (50, dogStart+100)へ
-                    angle = (Math.atan2(dogStart + 100 - myLocY, 50 - myLocX)) * 180. / Math.PI;
-                    break;
-                case 1:
-                    // 犬１は、座標 (50, dogStart)へ
-                    angle = (Math.atan2(dogStart - myLocY, 50 - myLocX)) * 180. / Math.PI;
-                    break;
-                case 2:
-                    // 犬２は、座標 (50, dogStart-100)へ
-                    angle = (Math.atan2(dogStart - 100 - myLocY, 50 - myLocX)) * 180. / Math.PI;
-                    break;
-                default:
-            }
+            angle = (Math.atan2(dogStartY - myLocY, 0 - myLocX)) * 180. / Math.PI;
+            action = "run:" + (int) angle;
+        } else if (step < 50) {
+            //次に、50ステップまでの間に、出発点に移動する。
+            double angle = 0;
+
+            // 犬は、座標 (godStartX - 15, dogStartY)へ
+            angle = (Math.atan2(dogStartY - myLocY, dogStartX - 15 - myLocX)) * 180. / Math.PI;
+
             action = "run:" + (int) angle;
         } else {
             // step が100以降では、
@@ -240,21 +230,11 @@ public class Dog {
             //  成功時 367
             action = "rest";
             double angle = 0;
-            switch (myNum) {
-                case 0:
-                    // 犬０は、座標 (670, 750)へ
-                    angle = (Math.atan2(750 - myLocY, 670 - myLocX)) * 180. / Math.PI;
-                    break;
-                case 1:
-                    // 犬１は、座標 (670, 400)へ
-                    angle = (Math.atan2(400 - myLocY, 670 - myLocX)) * 180. / Math.PI;
-                    break;
-                case 2:
-                    // 犬２は、座標 (670, 300)へ
-                    angle = (Math.atan2(300 - myLocY, 670 - myLocX)) * 180. / Math.PI;
-                    break;
-                default:
-            }
+
+            // 犬は、座標 (670, 550)へ
+            //////////////この部分を、羊の重心を常にチェックして知的な挙動をしたい
+            angle = (Math.atan2(550 - myLocY, 670 - myLocX)) * 180. / Math.PI;
+
             // 一番近い羊に200ドット以内に近づいたら休む。そうでなければ目標方向に動く。
             if (sheepDistance[0] > 200) {
                 action = "move:" + (int) angle;
