@@ -1,0 +1,45 @@
+﻿class Serviceの利用法
+
+Serviceクラスのインスタンスをserviceという名前で作成した場合の、
+様々な値の取得方法
+
+
+<<羊の情報>>
+
+"羊の数[匹]"の取得
+	int value = service.getSheepNum();
+
+"羊の前方視野角[度]"の取得
+	double value = service.getSheepSightAngle();
+
+"羊がゆっくり進むときの速さ[dot/step]"の取得
+	double value = service.getSheepSlowVelocity();
+
+"羊が速く走るときの速さ[dot/step]"の取得
+	double value = service.getSheepFastVelocity();
+
+"羊同士が近すぎて避けようとするときの互いの距離[dot]"の取得
+	double value = service.getSheepNearDistance();
+
+"羊同士が向きを揃えるときの互いの距離[dot]"の取得
+	double value = service.getSheepAlighnDistance();
+
+"羊同士が遠すぎると感じる距離[dot]"の取得
+	double value = service.getSheepFarDistance();
+
+"羊が犬に危険を感じる距離[dot]"の取得
+	double value = service.getSheepAvoidDogDistance();
+
+<<牧羊犬の情報>>
+
+"牧羊犬の数[匹]"の取得
+	int value = service.getDogNum();
+
+"牧羊犬がゆっくり進むときの速さ[dot/step]"の取得
+	double value = service.getDogSlowVelocity();
+
+"牧羊犬が速く走るときの速さ[dot/step]"の取得
+	double value = service.getDogFastVelocity();
+
+以上
+
