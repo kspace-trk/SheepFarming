@@ -208,6 +208,7 @@ public class Dog {
          }
          gx /= numSheep;
          gy /= numSheep;
+         double dogStart = gy - (550 - gy);
          //
         if (step < 50) {
             //最初の50ステップで、左辺（180度方向）に「走る」。
@@ -217,16 +218,16 @@ public class Dog {
             double angle = 0;
             switch (myNum) {
                 case 0:
-                    // 犬０は、座標 (50, 600)へ
-                    angle = (Math.atan2(gy + 100 - myLocY, 50 - myLocX)) * 180. / Math.PI;
+                    // 犬０は、座標 (50, dogStart+100)へ
+                    angle = (Math.atan2(dogStart + 100 - myLocY, 50 - myLocX)) * 180. / Math.PI;
                     break;
                 case 1:
-                    // 犬１は、座標 (50, 500)へ
-                    angle = (Math.atan2(gy - myLocY, 50 - myLocX)) * 180. / Math.PI;
+                    // 犬１は、座標 (50, dogStart)へ
+                    angle = (Math.atan2(dogStart - myLocY, 50 - myLocX)) * 180. / Math.PI;
                     break;
                 case 2:
-                    // 犬２は、座標 (50, 400)へ
-                    angle = (Math.atan2(gy - 100 - myLocY, 50 - myLocX)) * 180. / Math.PI;
+                    // 犬２は、座標 (50, dogStart-100)へ
+                    angle = (Math.atan2(dogStart - 100 - myLocY, 50 - myLocX)) * 180. / Math.PI;
                     break;
                 default:
             }
