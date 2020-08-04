@@ -19,6 +19,12 @@ public class Dog {
     int prevDeg = 0;
     double dogStartX = 0;
     double dogStartY = 0;
+    boolean flag = false;
+    double dogStatus = 0;
+    int dogWaitCount = 0;
+    boolean stop = false;
+    int nowStep = 0;
+    int dogRest = 200;
 
     //
     // 集団行動を組みむ際に使う可能性のある変数
@@ -246,18 +252,44 @@ public class Dog {
             action = "rest";
             double angle = 0;
 
-            // 犬は、座標 (dogStartX, dogStartY)へ
+            // 犬は、座標 (dogStartX - 190, dogStartY)へ
             //////////////この部分を、羊の重心を常にチェックして知的な挙動をしたい
-
-
-            //(Math.atan2(575 - myLocY, 700 - myLocX)) * 180. / Math.PI;
-            angle = (Math.atan2(dogStartY - myLocY , dogStartX - 150 - myLocX)) * 180./ Math.PI ;
-
-
+            if(!stop){
+            angle = (Math.atan2(dogStartY - myLocY , dogStartX - 190 - myLocX)) * 180./ Math.PI ;
+            }else if(stop){
+                if(step < nowStep){
+                    dogRest = 0;
+                    if(gy < 575){
+                        angle = (Math.atan2(dogStartY - 600 - myLocY , dogStartX + 300 - myLocX)) * 180./ Math.PI ;
+                    }else{
+                        angle = (Math.atan2(dogStartY + 600 - myLocY , dogStartX + 300 - myLocX)) * 180./ Math.PI ;
+                    }
+                }else{
+                    stop = false;
+                    dogRest = 200;
+                }
+            }
+            flag = !flag;
+            if(flag){
+                dogStatus += myLocX;
+            }else{
+                dogStatus -= myLocX;
+                if(-3 < dogStatus && dogStatus < 3){
+                    dogWaitCount++;
+                    if( dogWaitCount > 40){
+                        stop = true;
+                        nowStep = step + 30;
+                        dogWaitCount = 0;
+                    }
+                }else{
+                    dogWaitCount = 0;
+                    dogStatus = 0;
+                }
+            }
 
             // 一番近い羊に200ドット以内に近づいたら休む。そうでなければ目標方向に動く。
-            if (sheepDistance[0] > 200) {
-                action = "move:" + (int) angle;
+            if (sheepDistance[0] > dogRest) {
+                action = "run:" + (int) angle;
             } else {
                 action = "rest";
             }
