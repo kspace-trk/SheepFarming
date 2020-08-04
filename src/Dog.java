@@ -17,6 +17,9 @@ public class Dog {
     //前ステップでの行動内容
     String prevAct = "";
     int prevDeg = 0;
+    double dogStartX = 0;
+    double dogStartY = 0;
+
     //
     // 集団行動を組みむ際に使う可能性のある変数
     public static boolean goForward = false;
@@ -200,14 +203,26 @@ public class Dog {
         //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
         //  羊の重心座標取得 (gx, gy)
         double gx = 0, gy = 0;
+         gx = 0;
+         gy = 0;
          for (int i = 0; i < numSheep; i++) {
          gx += myLocX + sheepDistance[i] * Math.cos(sheepAngle[i] * Math.PI / 180.);
          gy += myLocY + sheepDistance[i] * Math.sin(sheepAngle[i] * Math.PI / 180.);
          }
          gx /= numSheep;
          gy /= numSheep;
-         double dogStartX = gx - (550 - gx);
-         double dogStartY = gy - (550 - gy);
+         
+         
+         double x = 700 - gx;
+         double y = 575 - gy;
+
+         dogStartX = gx - x/3;
+         if(gy >= 575){
+         dogStartY = gy + y/3;
+         }else{
+         dogStartY = gy - y/3;
+         }
+          
          //
         if (step < 30) {
             //最初の30ステップで、座標 (0, dogStartY)へ
@@ -218,8 +233,8 @@ public class Dog {
             //次に、50ステップまでの間に、出発点に移動する。
             double angle = 0;
 
-            // 犬は、座標 (godStartX - 15, dogStartY)へ
-            angle = (Math.atan2(dogStartY - myLocY, dogStartX - 15 - myLocX)) * 180. / Math.PI;
+            // 犬は、座標 (godStartX, dogStartY)へ
+            angle = (Math.atan2(dogStartY * 0.9 - myLocY, dogStartX * 0.9 - myLocX)) * 180. / Math.PI;
 
             action = "run:" + (int) angle;
         } else {
@@ -231,9 +246,14 @@ public class Dog {
             action = "rest";
             double angle = 0;
 
-            // 犬は、座標 (670, 550)へ
+            // 犬は、座標 (dogStartX, dogStartY)へ
             //////////////この部分を、羊の重心を常にチェックして知的な挙動をしたい
-            angle = (Math.atan2(550 - myLocY, 670 - myLocX)) * 180. / Math.PI;
+
+
+            //(Math.atan2(575 - myLocY, 700 - myLocX)) * 180. / Math.PI;
+            angle = (Math.atan2(dogStartY - myLocY , dogStartX - 150 - myLocX)) * 180./ Math.PI ;
+
+
 
             // 一番近い羊に200ドット以内に近づいたら休む。そうでなければ目標方向に動く。
             if (sheepDistance[0] > 200) {
