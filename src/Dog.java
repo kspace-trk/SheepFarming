@@ -199,15 +199,17 @@ public class Dog {
         //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
         //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
         //  羊の重心座標取得 (gx, gy)
-        double gx = 0, gy = 0;
+         double gx = 0, gy = 0;
          for (int i = 0; i < numSheep; i++) {
          gx += myLocX + sheepDistance[i] * Math.cos(sheepAngle[i] * Math.PI / 180.);
          gy += myLocY + sheepDistance[i] * Math.sin(sheepAngle[i] * Math.PI / 180.);
          }
          gx /= numSheep;
          gy /= numSheep;
-         double dogStartX = gx - (550 - gx);
-         double dogStartY = gy - (550 - gy);
+         
+         double dogStartX = gx - (800 - gx);
+         double dogStartY = gy - (575 - gy);
+          
          //
         if (step < 30) {
             //最初の30ステップで、座標 (0, dogStartY)へ
@@ -219,7 +221,7 @@ public class Dog {
             double angle = 0;
 
             // 犬は、座標 (godStartX - 15, dogStartY)へ
-            angle = (Math.atan2(dogStartY - myLocY, dogStartX - 15 - myLocX)) * 180. / Math.PI;
+            angle = (Math.atan2(dogStartY - myLocY, dogStartX - myLocX)) * 180. / Math.PI;
 
             action = "run:" + (int) angle;
         } else {
@@ -231,9 +233,13 @@ public class Dog {
             action = "rest";
             double angle = 0;
 
-            // 犬は、座標 (670, 550)へ
+            // 犬は、座標 (dogStartX, dogStartY)へ
             //////////////この部分を、羊の重心を常にチェックして知的な挙動をしたい
-            angle = (Math.atan2(550 - myLocY, 670 - myLocX)) * 180. / Math.PI;
+            if(gy<575){
+         
+            }
+            angle = (Math.atan2(dogStartY + dogStartY/3 - myLocY , dogStartX + dogStartX/3 - myLocX)) * 180./ Math.PI ; 
+            //(Math.atan2(575 - myLocY, 700 - myLocX)) * 180. / Math.PI;
 
             // 一番近い羊に200ドット以内に近づいたら休む。そうでなければ目標方向に動く。
             if (sheepDistance[0] > 200) {
