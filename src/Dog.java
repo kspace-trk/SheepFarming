@@ -230,12 +230,12 @@ public class Dog {
          }
           
          //
-        if (step < 30) {
+        if (step < 20) {
             //最初の30ステップで、座標 (0, dogStartY)へ
             double angle = 0;
             angle = (Math.atan2(dogStartY - myLocY, 0 - myLocX)) * 180. / Math.PI;
             action = "run:" + (int) angle;
-        } else if (step < 50) {
+        } else if (step < 35) {
             //次に、50ステップまでの間に、出発点に移動する。
             double angle = 0;
 
