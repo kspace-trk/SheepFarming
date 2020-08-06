@@ -111,102 +111,7 @@ public class Dog {
         // ＝＝＝＝＝　削除して試してください　  　　　　　　　　　　　＝＝＝＝＝＝
         // ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 
-        //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-        /*
-         //　行動例１　ランダムに走る例
-         action = "run:" + (int) (Math.random() * 360);
-         // 行動例１　の　終わり
-         */
-        //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-        //
-        ///////////////////////////////////////
-        //
-        //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-        /*
-         //　行動例２　必ず羊の群れの重心に向かう場合
-         double gx = 0, gy = 0;
-         for (int i = 0; i < numSheep; i++) {
-         gx += myLocX + sheepDistance[i] * Math.cos(sheepAngle[i] * Math.PI / 180.);
-         gy += myLocY + sheepDistance[i] * Math.sin(sheepAngle[i] * Math.PI / 180.);
-         }
-         gx /= numSheep;
-         gy /= numSheep;
-
-         double tx = gx - myLocX;
-         double ty = gy - myLocY;
-         double ta = Math.atan2(ty, tx) * 180. / Math.PI;
-         if (ta < 0) {
-         ta += 360.;
-         }
-         action = "run:" + (int) (ta);
-         // 行動例２　の　終わり
-         */
-        //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-        //
-        ///////////////////////////////////////
-        //
-        //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-        /*
-        //行動例３　牧羊犬が右回りに四角形を描いて動く例
-        if (0 <= myLocX && myLocX <= 200 && myLocY <= 600) {
-            action = "run:" + 90;
-        } else if (500 < myLocX && myLocX <= 700 && myLocY >= 200) {
-            action = "run:" + 270;
-        } else if (0 <= myLocY && myLocY <= 200 && myLocX >= 200) {
-            action = "run:" + 180;
-        } else if (700 <= myLocY && myLocY <= 800 && myLocX <= 500) {
-            action = "run:" + 0;
-        } else {
-            action = "run:" + 0;
-        }
-        //行動例３　の終わり
-         */
-        //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-        //
-        ///////////////////////////////////////
-        //
-        //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-        /*
-        //　行動例４　牧羊犬が、自分の番号に応じて別の行動をとる例
-        if (this.getMyNum() == 0) {
-            //　牧羊犬が０番なら、左回りに四角形を描いて動く
-            if (0 <= myLocX && myLocX <= 200 && myLocY >= 200) {
-                action = "run:" + 270;
-            } else if (500 < myLocX && myLocX <= 700 && myLocY <= 600) {
-                action = "run:" + 90;
-            } else if (0 <= myLocY && myLocY <= 200 && myLocX <= 500) {
-                action = "run:" + 0;
-            } else if (600 <= myLocY && myLocY <= 800 && myLocX >= 200) {
-                action = "run:" + 180;
-            } else {
-                action = "run:" + 0;
-            }
-        } else if (this.getMyNum() == 1) {
-            //　牧羊犬が１番なら、右回りに四角形を描いて動く
-
-            if (0 <= myLocX && myLocX <= 200 && myLocY <= 600) {
-                action = "run:" + 90;
-            } else if (500 < myLocX && myLocX <= 700 && myLocY >= 200) {
-                action = "run:" + 270;
-            } else if (0 <= myLocY && myLocY <= 200 && myLocX >= 200) {
-                action = "run:" + 180;
-            } else if (600 <= myLocY && myLocY <= 800 && myLocX <= 00) {
-                action = "run:" + 0;
-            } else {
-                action = "run:" + 0;
-            }
-        } else {
-            action = "rest";
-        }
-        //行動例４　の終わり
-        */
         
-        
-        //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-        //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-        // 工夫例 (1)
-        //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-        //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
         //  羊の重心座標取得 (gx, gy)
         double gx = 0, gy = 0;
          gx = 0;
@@ -224,22 +129,22 @@ public class Dog {
 
          dogStartX = gx - x/3;
          if(gy >= 575){
-         dogStartY = gy + y/3;
+            dogStartY = gy + y/3;
          }else{
-         dogStartY = gy - y/3;
+            dogStartY = gy - y/3;
          }
           
          //
         if (step < 20) {
-            //最初の30ステップで、座標 (0, dogStartY)へ
+            //最初の20ステップで、座標 (0, dogStartY)へ
             double angle = 0;
             angle = (Math.atan2(dogStartY - myLocY, 0 - myLocX)) * 180. / Math.PI;
             action = "run:" + (int) angle;
         } else if (step < 35) {
-            //次に、50ステップまでの間に、出発点に移動する。
+            //次に、35ステップまでの間に、出発点に移動する。
             double angle = 0;
 
-            // 犬は、座標 (godStartX, dogStartY)へ
+            // 犬は、座標 (godStartX * 0.95, dogStartY * 0.95)へ
             angle = (Math.atan2(dogStartY * 0.95 - myLocY, dogStartX * 0.95 - myLocX)) * 180. / Math.PI;
 
             action = "run:" + (int) angle;
@@ -251,20 +156,20 @@ public class Dog {
             System.out.println("1000超えました");
         }
         else {
-            // step が100以降では、
-            //　各犬の目標地点に移動する。
-            //　ただし、ゆっくりと移動する　move
+            // step が35以降では、
+            //　羊小屋と羊の重心地点の対角線上を進む
             //　また、一番近い羊に近づきすぎたら休む　rest
-            //  成功時 367
-            action = "rest";
+            action = "run";
             double angle = 0;
 
             // 犬は、座標 (dogStartX - 190, dogStartY)へ
             //////////////この部分を、羊の重心を常にチェックして知的な挙動をしたい
             if(!stop){
                 if(myLocX > 400){
+                    //羊に近づいていく
                     angle = (Math.atan2(dogStartY - myLocY , dogStartX - 190 - myLocX)) * 180./ Math.PI ;
                 }else{
+                    //羊小屋に近づいてきたら羊とすこし距離を取る
                     angle = (Math.atan2(dogStartY - myLocY , dogStartX - 150 - myLocX)) * 180./ Math.PI ;
                 }
             }else if(stop){
@@ -272,13 +177,15 @@ public class Dog {
                     dogRest = 0;
                     if(myLocX <= 700){
                         if(gy < 575){
+                            //羊が上にいたら右下に移動
                             angle = (Math.atan2(dogStartY - 600 - myLocY , dogStartX + 300 - myLocX)) * 180./ Math.PI ;
                         }else if(gy >= 575){
+                            //羊が下にいたら右上に移動
                             angle = (Math.atan2(dogStartY + 600 - myLocY , dogStartX + 300 - myLocX)) * 180./ Math.PI ;
                         }
                     }else if(myLocX > 700 ){
                         //犬が羊小屋に入っちゃったら脱出する  
-                        angle = (Math.atan2(myLocY , 500 - myLocX)) * 180./ Math.PI ;
+                        angle = (Math.atan2(dogStartY - myLocY , 0 - myLocX)) * 180./ Math.PI ;
                     }
                 }else{
                     stop = false;
