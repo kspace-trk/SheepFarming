@@ -240,7 +240,7 @@ public class Dog {
             double angle = 0;
 
             // 犬は、座標 (godStartX, dogStartY)へ
-            angle = (Math.atan2(dogStartY * 0.9 - myLocY, dogStartX * 0.9 - myLocX)) * 180. / Math.PI;
+            angle = (Math.atan2(dogStartY * 0.95 - myLocY, dogStartX * 0.95 - myLocX)) * 180. / Math.PI;
 
             action = "run:" + (int) angle;
         } else {
@@ -255,7 +255,7 @@ public class Dog {
             // 犬は、座標 (dogStartX - 190, dogStartY)へ
             //////////////この部分を、羊の重心を常にチェックして知的な挙動をしたい
             if(!stop){
-            angle = (Math.atan2(dogStartY - myLocY , dogStartX - 190 - myLocX)) * 180./ Math.PI ;
+            angle = (Math.atan2(dogStartY - myLocY , dogStartX - 185 - myLocX)) * 180./ Math.PI ;
             }else if(stop){
                 if(step < nowStep){
                     dogRest = 0;
