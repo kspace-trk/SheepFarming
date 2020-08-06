@@ -243,7 +243,14 @@ public class Dog {
             angle = (Math.atan2(dogStartY * 0.95 - myLocY, dogStartX * 0.95 - myLocX)) * 180. / Math.PI;
 
             action = "run:" + (int) angle;
-        } else {
+        } else if(1000 < step && step < 1030){
+            double angle = 0;
+            //1000stepを超えたら、(0 , dogStartY)に戻る
+            angle = (Math.atan2(dogStartY - myLocY, 0 - myLocX)) * 180. / Math.PI;
+            action = "run:" + (int) angle;
+            System.out.println("1000超えました");
+        }
+        else {
             // step が100以降では、
             //　各犬の目標地点に移動する。
             //　ただし、ゆっくりと移動する　move
@@ -263,10 +270,15 @@ public class Dog {
             }else if(stop){
                 if(step < nowStep){
                     dogRest = 0;
-                    if(gy < 575){
-                        angle = (Math.atan2(dogStartY - 600 - myLocY , dogStartX + 300 - myLocX)) * 180./ Math.PI ;
-                    }else{
-                        angle = (Math.atan2(dogStartY + 600 - myLocY , dogStartX + 300 - myLocX)) * 180./ Math.PI ;
+                    if(myLocX <= 700){
+                        if(gy < 575){
+                            angle = (Math.atan2(dogStartY - 600 - myLocY , dogStartX + 300 - myLocX)) * 180./ Math.PI ;
+                        }else if(gy >= 575){
+                            angle = (Math.atan2(dogStartY + 600 - myLocY , dogStartX + 300 - myLocX)) * 180./ Math.PI ;
+                        }
+                    }else if(myLocX > 700 ){
+                        //犬が羊小屋に入っちゃったら脱出する  
+                        angle = (Math.atan2(myLocY , 500 - myLocX)) * 180./ Math.PI ;
                     }
                 }else{
                     stop = false;
